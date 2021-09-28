@@ -23,13 +23,13 @@ class CategoryRepository extends ServiceEntityRepository
     //  * @return Category[] Returns an array of Category objects
     //  */
     
-    public function findByTerm($term)
+    public function findByTerm(string $term, int $limit = 100)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.term = :val')
             ->setParameter('val', $term)
-            // ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('c.name', 'ASC')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;

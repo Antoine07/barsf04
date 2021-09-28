@@ -40,9 +40,14 @@ class Beer
     private $country;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="toto")
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="beers")
      */
     private $categories;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
+     */
+    private $price;
 
     public function __construct()
     {
@@ -125,6 +130,19 @@ class Beer
         if ($this->categories->removeElement($category)) {
             $category->removeBeer($this);
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    // le type d'un decimal dans la base de données sera passé en string
+    public function setPrice(?string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

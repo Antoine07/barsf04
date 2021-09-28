@@ -110,6 +110,12 @@ class Category
 
     public function setTerm(?string $term): self
     {
+        if(!in_array($term, [self::NORMAL, self::SPECIAL])){
+            // On lance une exception ce qui provoque l'arrêt des scripts 
+
+            throw new \InvalidArgumentException("Invalid term");
+        }
+
         $this->term = $term;
 
         return $this;

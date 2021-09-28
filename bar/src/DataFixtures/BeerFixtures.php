@@ -35,6 +35,7 @@ class BeerFixtures extends Fixture implements OrderedFixtureInterface
             $beer = new Beer();
             $beer->setName($faker->word);
             $beer->setPublishAt($faker->dateTime());
+            $beer->setPrice($faker->randomFloat(2, 4, 30));
             $beer->setDescription($faker->text(rand(200, 500)));
             // $country = array_slice($countries, 0, 1); // renvoie un tableau
             // dump($country);
