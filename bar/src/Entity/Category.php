@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+    
+    // une constante ne peut pas être modifiée et est liée à la classe et non à l'objet
+    const NORMAL="normal";
+    const SPECIAL="special";
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,9 +39,15 @@ class Category
      */
     private $beers;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $term;
+
     public function __construct()
     {
         $this->beers = new ArrayCollection();
+        $this->setTerm(self::NORMAL); // self permet d'accèder à la constante de la classe
     }
 
     public function getId(): ?int
@@ -88,6 +99,18 @@ class Category
     public function removeBeer(Beer $beer): self
     {
         $this->beers->removeElement($beer);
+
+        return $this;
+    }
+
+    public function getTerm(): ?string
+    {
+        return $this->term;
+    }
+
+    public function setTerm(?string $term): self
+    {
+        $this->term = $term;
 
         return $this;
     }

@@ -114,7 +114,7 @@ class Beer
     {
         if (!$this->categories->contains($category)) {
             $this->categories[] = $category;
-            $category->addToto($this);
+            $category->addBeer($this);
         }
 
         return $this;
@@ -123,7 +123,7 @@ class Beer
     public function removeCategory(Category $category): self
     {
         if ($this->categories->removeElement($category)) {
-            $category->removeToto($this);
+            $category->removeBeer($this);
         }
 
         return $this;
