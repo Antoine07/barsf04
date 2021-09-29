@@ -4,17 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Beer;
 use App\Entity\Country;
+use App\Services\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BarController extends AbstractController
 {
+    // Message est un exemple de service injecté dans notre classe
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(Message $message): Response
     {
+        
         $beers = $this->getDoctrine()->getRepository(Beer::class)->findAll();
 
         return $this->render('bar/index.html.twig', [

@@ -47,4 +47,17 @@ class BeerRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByCatTerm(string $term, int $beerId)
+    {
+        // SELECT c.name, c.id FROM beer as b JOIN category as c WHERE c.term = ... AND b.id = ...
+        return $this->createQueryBuilder('b') // b représente Beer
+            ->select('c.name, c.id')
+            ->join('b.categories', 'c') // on fait une jointure avec l'entité Category en nommant la relation avec son pluriel ou singulier c est un alias
+            ->andWhere('c.term=:term AND b.id=:beerId') // les catégories spéciales ou normales d'une bière donnée
+            ->setParameter('term', $term)
+            ->setParameter('beerId', $beerId)
+            ->getQuery()
+            ->getResult();
+    }
 }
