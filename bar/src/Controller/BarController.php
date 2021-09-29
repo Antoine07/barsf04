@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Beer;
 use App\Entity\Country;
+use App\Entity\Category;
 use App\Services\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class BarController extends AbstractController
      */
     public function index(Message $message): Response
     {
-        
+
         $beers = $this->getDoctrine()->getRepository(Beer::class)->findAll();
 
         return $this->render('bar/index.html.twig', [
@@ -35,8 +36,34 @@ class BarController extends AbstractController
         // dump($country); die;
 
         return $this->render('country/index.html.twig', [
-          'beers' => $country->getBeers() ?? [],
-          'title' => $country->getName()
+            'beers' => $country->getBeers() ?? [],
+            'title' => $country->getName()
+        ]);
+    }
+
+    /**
+     * @Route("/category/{id}", name="show_beer_category")
+     */
+    public function category(Category $category){
+
+        return $this->render('category/index.html.twig', [
+            'beers' => $category->getBeers() ?? [],
+            'title' => $category->getName()
+        ]);
+    }
+
+    /**
+     * @Route("/menu", name="menu")
+     */
+    public function mainMenu(string $routeName, int $catId = null): Response
+    {
+        // on fait une instance de Doctrine 
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findBy(['term' => 'normal']);
+
+        return $this->render('partials/menu.html.twig', [
+            'route_name' => $routeName,
+            'category_id' => $catId,
+            'categories' => $categories
         ]);
     }
 }
