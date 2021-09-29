@@ -37,7 +37,8 @@ class Custom extends AbstractExtension
             }),
             new TwigFunction('normal', function (Beer $beer) {
                 return $this->manager->getRepository(Beer::class)->findByCatTerm('normal', $beer->getId());
-            })
+            }),
+           
         ];
     }
 }
